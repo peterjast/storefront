@@ -1,6 +1,6 @@
 # Storefront
 
-Lab #1 PR: [https://github.com/peterjast/todo/pull/1](https://github.com/peterjast/storefront/pull/1)
+Lab #1 PR: [https://github.com/peterjast/storefront/pull/1](https://github.com/peterjast/storefront/pull/1)
 
 Deployed: [https://ps-storefront.netlify.app/](https://ps-storefront.netlify.app/)
 
