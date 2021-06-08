@@ -2,11 +2,11 @@
 let initialState = {
   categories: [
     { name: 'FOOD', description: 'Eat the things' },
-    { name: 'ELECTRONICS', votes: 'Do the things with the things' }
+    { name: 'ELECTRONICS', description: 'It\'s electric! Boogie woogie, woogie!' }
   ],
   products: [
-    { category: 'FOOD', name: 'Calzones', description: 'Hotpocket on steroids', price: 7.99, inventory: 7 },
-    { category: 'ELECTRONICS', name:'Keyboard', description: 'typer thingy', price: 89.99, inventory: 8}
+    { category: 'FOOD', name: 'Calzone', description: 'Hotpocket on steroids', price: 7.99, inventory: 7, image:'https://emeals-menubuilder.s3.amazonaws.com/v1/recipes/753751/pictures/large_family-night-pepperoni-calzones.jpeg'},
+    { category: 'ELECTRONICS', name:'Keyboard', description: 'typer thingy', price: 89.99, inventory: 8, image: 'https://www.mostfamouslist.com/wp-content/uploads/2016/04/Kirameki-Pure-Gold-Keyboard.jpg'}
   ],
   activeCategory : ''
 }
@@ -40,6 +40,27 @@ const changeCategory = (state = initialState, action) => {
 
       return { activeCategory: active, categories: cats, products: prods};  
 
+    case 'ADDCART':
+      let items = state.products.map(product => {
+        if (product.name === payload.name) {
+          return { category: product.category, name: product.name, description: product.description, price: product.price, inventory: product.inventory - 1, image: product.image };
+        }
+        return product;
+      })  
+
+      return {categories: state.categories, activeCategory: state.activeCategory, products: items};
+
+    case 'REMOVECART':
+      let allItems = state.products.map(product => {
+        if (product.name === payload.name) {
+          return { category: product.category, name: product.name, description: product.description, price: product.price, inventory: product.inventory + 1, image: product.image };
+        }
+        return product;
+      })  
+
+      return { categories: state.categories, activeCategory: state.activeCategory, products: allItems};
+
+      
     case 'RESET':
       return initialState;
     
@@ -65,6 +86,20 @@ export const electronics = (name) => {
 export const reset = () => {
   return {
     type: 'RESET'
+  }
+}
+
+export const addToCard = (product) => {
+  return {
+    type: 'ADDCART',
+    payload: product
+  }
+}
+
+export const removeFromCart = (product) => {
+  return {
+    type: 'REMOVECART',
+    payload: product
   }
 }
 

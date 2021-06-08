@@ -2,6 +2,8 @@
 
 Lab #1 PR: [https://github.com/peterjast/storefront/pull/1](https://github.com/peterjast/storefront/pull/1)
 
+Lab #2 PR: [https://github.com/peterjast/storefront/pull/2](https://github.com/peterjast/storefront/pull/2)
+
 Deployed: [https://ps-storefront.netlify.app/](https://ps-storefront.netlify.app/)
 
 ## Install Dependences
@@ -14,4 +16,4 @@ npm run start
 
 ## Data Flow
 
-![to do dataflow](./src/assets/uml.jpg)
+![storefront dataflow](./src/assets/uml.jpg)
