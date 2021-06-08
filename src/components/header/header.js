@@ -1,5 +1,6 @@
 import { AppBar, Toolbar } from "@material-ui/core";
 import React from "react";
+import Cart from '../storefront/simplecart';
 
 export default function Header() {
   const displayDesktop = () => {
@@ -8,7 +9,10 @@ export default function Header() {
   
   return (
     <header>
-      <AppBar>{displayDesktop()}</AppBar>
+      <AppBar>
+        {displayDesktop()}
+        <Cart />
+      </AppBar>
     </header>
   );
 }
