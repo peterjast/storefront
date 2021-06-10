@@ -17,26 +17,17 @@ const changeCart = (state = initialState, action) => {
 
     case 'REMOVECART': 
       let cartCount = state.cartCounter - 1;
-      let tempCart = state.cart.filter(item => item !== payload);
+      let tempCart = state.cart.filter(item => item.name !== payload.name);
 
       return { cart: tempCart, cartCounter: cartCount };
 
+    case 'GETCART':
+      let fetchedProds = payload;
+
+      return { cart: fetchedProds, cartCounter: payload.length };
+
     default:
       return state;
-  }
-}
-
-export const addToCart = (product) => {
-  return {
-    type: 'ADDCART',
-    payload: product
-  }
-}
-
-export const removeFromCart = (product) => {
-  return {
-    type: 'REMOVECART',
-    payload: product
   }
 }
 

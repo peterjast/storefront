@@ -5,8 +5,8 @@ let initialState = {
     { name: 'ELECTRONICS', description: 'It\'s electric! Boogie woogie, woogie!' }
   ],
   products: [
-    { category: 'FOOD', name: 'Calzone', description: 'Hotpocket on steroids', price: 7.99, inventory: 7, image:'https://emeals-menubuilder.s3.amazonaws.com/v1/recipes/753751/pictures/large_family-night-pepperoni-calzones.jpeg'},
-    { category: 'ELECTRONICS', name:'Keyboard', description: 'typer thingy', price: 89.99, inventory: 8, image: 'https://www.mostfamouslist.com/wp-content/uploads/2016/04/Kirameki-Pure-Gold-Keyboard.jpg'}
+    // { category: 'FOOD', name: 'Calzone', description: 'Hotpocket on steroids', price: 7.99, inventory: 7, image:'https://emeals-menubuilder.s3.amazonaws.com/v1/recipes/753751/pictures/large_family-night-pepperoni-calzones.jpeg'},
+    // { category: 'ELECTRONICS', name:'Keyboard', description: 'typer thingy', price: 89.99, inventory: 8, image: 'https://www.mostfamouslist.com/wp-content/uploads/2016/04/Kirameki-Pure-Gold-Keyboard.jpg'}
   ],
   activeCategory : ''
 }
@@ -23,8 +23,9 @@ const changeCategory = (state = initialState, action) => {
           return { name: category.name, description: category.description }
         }
         return category;
-      });     
-      let products = initialState.products.filter(product => product.category === payload);
+      });
+      let fetched = payload;      
+      let products = fetched.filter(product => product.category === activeCategory);
 
       return { activeCategory, categories, products };
 
@@ -35,15 +36,16 @@ const changeCategory = (state = initialState, action) => {
           return { name: category.name, description: category.description }
         }
         return category;
-      });      
-      let prods = initialState.products.filter(product => product.category === payload);
+      });
+      let fetchedProducts = payload;      
+      let prods = fetchedProducts.filter(product => product.category === active);
 
       return { activeCategory: active, categories: cats, products: prods};  
 
     case 'ADDCART':
       let items = state.products.map(product => {
         if (product.name === payload.name) {
-          return { category: product.category, name: product.name, description: product.description, price: product.price, inventory: product.inventory - 1, image: product.image };
+          return { _id: product._id, category: product.category, name: product.name, description: product.description, price: product.price, inventory: product.inventory - 1, image: product.image };
         }
         return product;
       })  
@@ -53,53 +55,22 @@ const changeCategory = (state = initialState, action) => {
     case 'REMOVECART':
       let allItems = state.products.map(product => {
         if (product.name === payload.name) {
-          return { category: product.category, name: product.name, description: product.description, price: product.price, inventory: product.inventory + 1, image: product.image };
+          return { _id: product._id, category: product.category, name: product.name, description: product.description, price: product.price, inventory: product.inventory + 1, image: product.image };
         }
         return product;
       })  
 
       return { categories: state.categories, activeCategory: state.activeCategory, products: allItems};
 
+    case 'GET':
+      let fetchedProds = payload;
+      return { categories: state.categories, activeCategory: state.activeCategory, products: fetchedProds};
       
     case 'RESET':
       return initialState;
     
     default:
       return state;
-  }
-}
-
-export const food = (name) => {
-    return {
-      type: 'FOOD',
-      payload: name
-    }
-}
-
-export const electronics = (name) => {
-  return {
-    type: 'ELECTRONICS',
-    payload: name
-  }
-}
-
-export const reset = () => {
-  return {
-    type: 'RESET'
-  }
-}
-
-export const addToCard = (product) => {
-  return {
-    type: 'ADDCART',
-    payload: product
-  }
-}
-
-export const removeFromCart = (product) => {
-  return {
-    type: 'REMOVECART',
-    payload: product
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -7,10 +7,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import * as actions from '../../store/actions.js';
 import './storefront.css';
 
 import { connect } from 'react-redux';
-import { removeFromCart } from '../../store/cart.js';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,24 +22,34 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 80, 
-  }, 
+  },
 }));
+
 
 const Cart = props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  const fetchData = (e) => {
+    e && e.preventDefault();
+    props.getCart();
+  }
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
   return(
     <section className="cart">
       <Button className="cart-button" aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
@@ -79,7 +89,7 @@ const Cart = props => {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary" onClick={() => props.removeFromCart(product)}>
+              <Button size="small" color="primary" onClick={() => props.removeFromCart(product._id, product)}>
                 REMOVE
               </Button>
             </CardActions>
@@ -96,6 +106,9 @@ const mapStateToProps = state => ({
   cartCounter: state.cartCounter
 })
 
-const mapDispatchToProps = { removeFromCart }
+const mapDispatchToProps = (dispatch, getState) => ({
+  getCart: () => dispatch(actions.getCartData()),
+  removeFromCart: (id, product) => dispatch(actions.putRemoveFromCart(id, product))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

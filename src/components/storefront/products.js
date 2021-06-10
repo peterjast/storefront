@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,10 +8,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import './storefront.css';
+import * as actions from '../../store/actions.js'
 
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { addToCart } from '../../store/cart';
 
 const Products = props => {
 
@@ -26,13 +26,22 @@ const Products = props => {
   
   const classes = useStyles();
 
+  const fetchData = (e) => {
+    e && e.preventDefault();
+    props.get();
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return(
     <section className="products">
       <Grid container>
         {props.products.map(product => {
           if(product.inventory > 0){
             return (
-            <Card className={classes.root} key={product.name} id="card">
+            <Card className={classes.root} key={product._id} id="card">
                <CardActionArea>
                  <CardMedia
                   className={classes.media}
@@ -49,7 +58,7 @@ const Products = props => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary" onClick={() => props.addToCart(product)}>
+                <Button size="small" color="primary" onClick={() => props.addToCart(product._id, product)}>
                   ADD TO CART
                 </Button>
                 <Button size="small" color="primary">
@@ -65,7 +74,10 @@ const Products = props => {
   )
 }
 
-const mapDispatchToProps = { addToCart }
+const mapDispatchToProps = (dispatch, getState) => ({
+  get: () => dispatch(actions.getRemoteData()),
+  addToCart: (id, product) => dispatch(actions.putRemoteData(id, product))
+})
 
 const mapStateToProps = state => ({
   products: state.category.products,
