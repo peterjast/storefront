@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Spinner } from 'react-spinners-css';
+import { If, Then, Else } from 'react-if';
 import { Grid } from '@material-ui/core';
 import './storefront.css';
 import * as actions from '../../store/actions.js'
@@ -37,51 +39,64 @@ const Products = props => {
   }, []);
 
   return(
-    <section className="products">
-      <Grid container spacing={6}>
-        {props.products.map(product => {
-          if(product.inventory > 0){
-            return (
-              <Grid item xs={12} md={4}>
-            <Card className={classes.root} key={product._id} id="card">
-               <CardActionArea>
-                 <CardMedia
-                  className={classes.media}
-                  image={product.image}
-                  title={product.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {product.name}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    {product.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Grid container>
-                  <Grid item sm={6}>
-                    <Button size="small" color="primary" onClick={() => props.addToCart(product._id, product)}>
-                      ADD TO CART
-                    </Button>
-                  </Grid>
-                  <Grid item sm={6}>
-                    <Link to={`products/${product._id}`}>
-                      <Button size="small" color="primary">
-                        VIEW DETAILS
-                      </Button>
-                    </Link>
-                  </Grid>
-                </Grid>
-              </CardActions>
-            </Card>
-            </ Grid>
-            )
-          }
-        })}
-      </Grid>
-    </section>
+    <If condition={props.products.length === 0}>
+      <Then>
+        <div className="spinner">
+          <Spinner color="#3f51b5" />
+        </div>
+      </Then>
+      <Else>
+        <If condition={props.products.length > 0}>
+          <Then>
+            <section className="products">
+              <Grid container spacing={6}>
+                {props.products.map(product => {
+                  if(product.inventory > 0){
+                    return (
+                      <Grid item xs={12} md={4}>
+                    <Card className={classes.root} key={product._id} id="card">
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={product.image}
+                          title={product.name}
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {product.name}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary" component="p">
+                            {product.description}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions>
+                        <Grid container>
+                          <Grid item sm={6}>
+                            <Button size="small" color="primary" onClick={() => props.addToCart(product._id, product)}>
+                              ADD TO CART
+                            </Button>
+                          </Grid>
+                          <Grid item sm={6}>
+                            <Link to={`products/${product._id}`}>
+                              <Button size="small" color="primary">
+                                VIEW DETAILS
+                              </Button>
+                            </Link>
+                          </Grid>
+                        </Grid>
+                      </CardActions>
+                    </Card>
+                    </ Grid>
+                    )
+                  }
+                })}
+              </Grid>
+            </section>
+          </Then>
+        </If>
+      </Else>
+    </If>
   )
 }
 

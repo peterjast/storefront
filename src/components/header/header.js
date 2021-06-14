@@ -26,11 +26,3 @@ export default function Header() {
     </header>
   );
 }
-
-/* <AppBar position="absolute" color="default" className={classes.appBar}>
-<Toolbar>
-  <Typography variant="h6" color="inherit" noWrap>
-    Company name
-  </Typography>
-</Toolbar>
-</AppBar> */
