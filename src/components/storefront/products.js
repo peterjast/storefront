@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -37,10 +38,11 @@ const Products = props => {
 
   return(
     <section className="products">
-      <Grid container>
+      <Grid container spacing={6}>
         {props.products.map(product => {
           if(product.inventory > 0){
             return (
+              <Grid item xs={12} md={4}>
             <Card className={classes.root} key={product._id} id="card">
                <CardActionArea>
                  <CardMedia
@@ -58,14 +60,23 @@ const Products = props => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary" onClick={() => props.addToCart(product._id, product)}>
-                  ADD TO CART
-                </Button>
-                <Button size="small" color="primary">
-                  VIEW DETAILS
-                </Button>
+                <Grid container>
+                  <Grid item sm={6}>
+                    <Button size="small" color="primary" onClick={() => props.addToCart(product._id, product)}>
+                      ADD TO CART
+                    </Button>
+                  </Grid>
+                  <Grid item sm={6}>
+                    <Link to={`products/${product._id}`}>
+                      <Button size="small" color="primary">
+                        VIEW DETAILS
+                      </Button>
+                    </Link>
+                  </Grid>
+                </Grid>
               </CardActions>
             </Card>
+            </ Grid>
             )
           }
         })}

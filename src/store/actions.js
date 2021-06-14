@@ -33,17 +33,26 @@ export const getFood = () => dispatch => {
 
 export const putRemoteData = (id, data) => async dispatch => {
   try{
-    let body = { inventory: data.inventory-1 };
-    let response = await superagent.put(`${api}/${id}`).send(body);
-    dispatch(addToCart(response.body))
-    let res = await superagent.post(apiCart).send(response.body);
-    console.log(res.body)
+    let getCartResponse = await superagent.get(apiCart);
+    let cartContainsItem = false;
+    getCartResponse.body.forEach(item => {
+      if(item._id === id){
+        cartContainsItem = true;
+      }
+    })
+    if(!cartContainsItem){
+      let body = { inventory: data.inventory-1 };
+      let response = await superagent.put(`${api}/${id}`).send(body);
+      dispatch(addToCart(response.body))
+      let res = await superagent.post(apiCart).send(response.body);
+      console.log(res.body)
+    }
   } catch(err) {
     console.log(err.message);
   }
 }
 
-export const putRemoveFromCart = (id, data) => async dispatch => {
+export const deleteCartItem = (id, data) => async dispatch => {
   try{
     let body = { inventory: data.inventory+1 };
     let response = await superagent.put(`${api}/${id}`).send(body)

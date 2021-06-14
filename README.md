@@ -1,12 +1,16 @@
 # Storefront
 
-Lab #1 PR: [https://github.com/peterjast/storefront/pull/1](https://github.com/peterjast/storefront/pull/1)
+This is an E-commerce store front built with React, Redux, and Material-UI.
 
-Lab #2 PR: [https://github.com/peterjast/storefront/pull/2](https://github.com/peterjast/storefront/pull/2)
+Lab #36 PR: [https://github.com/peterjast/storefront/pull/1](https://github.com/peterjast/storefront/pull/1)
 
-Lab #3 PR: [https://github.com/peterjast/storefront/pull/3](https://github.com/peterjast/storefront/pull/3)
+Lab #37 PR: [https://github.com/peterjast/storefront/pull/2](https://github.com/peterjast/storefront/pull/2)
 
-Deployed: [https://ps-storefront.netlify.app/](https://ps-storefront.netlify.app/)
+Lab #38 PR: [https://github.com/peterjast/storefront/pull/3](https://github.com/peterjast/storefront/pull/3)
+
+Lab #39 PR: [https://github.com/peterjast/storefront/pull/4](https://github.com/peterjast/storefront/pull/3)
+
+Deployed Application: [https://ps-storefront.netlify.app/](https://ps-storefront.netlify.app/)
 
 ## Install Dependences
 
