@@ -2,7 +2,7 @@
 let initialState = {
   categories: [
     { name: 'FOOD', description: 'Eat the things' },
-    { name: 'ELECTRONICS', description: 'It\'s electric! Boogie woogie, woogie!' }
+    { name: 'ELECTRONICS', description: 'It\'s electric... Boogie woogie, woogie!' }
   ],
   products: [
     // { category: 'FOOD', name: 'Calzone', description: 'Hotpocket on steroids', price: 7.99, inventory: 7, image:'https://emeals-menubuilder.s3.amazonaws.com/v1/recipes/753751/pictures/large_family-night-pepperoni-calzones.jpeg'},
@@ -18,12 +18,7 @@ const changeCategory = (state = initialState, action) => {
 
     case 'FOOD':
       let activeCategory = 'FOOD';
-      let categories = state.categories.map(category => {
-        if (category.name === payload) {
-          return { name: category.name, description: category.description }
-        }
-        return category;
-      });
+      let categories = state.categories;
       let fetched = payload;      
       let products = fetched.filter(product => product.category === activeCategory);
 
@@ -31,16 +26,10 @@ const changeCategory = (state = initialState, action) => {
 
     case 'ELECTRONICS':
       let active = 'ELECTRONICS';
-      let cats = state.categories.map(category => {
-        if (category.name === payload) {
-          return { name: category.name, description: category.description }
-        }
-        return category;
-      });
       let fetchedProducts = payload;      
       let prods = fetchedProducts.filter(product => product.category === active);
 
-      return { activeCategory: active, categories: cats, products: prods};  
+      return { activeCategory: active, categories: state.categories, products: prods};  
 
     case 'ADDCART':
       let items = state.products.map(product => {
@@ -64,10 +53,8 @@ const changeCategory = (state = initialState, action) => {
 
     case 'GET':
       let fetchedProds = payload;
-      return { categories: state.categories, activeCategory: state.activeCategory, products: fetchedProds};
-      
-    case 'RESET':
-      return initialState;
+      let activeCat = 'ALL PRODUCTS';
+      return { categories: state.categories, activeCategory: activeCat, products: fetchedProds};
     
     default:
       return state;

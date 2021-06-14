@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -18,13 +19,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   root: {
-    maxWidth: 200,
+    maxWidth: 220,
   },
   media: {
     height: 80, 
   },
 }));
-
 
 const Cart = props => {
   const classes = useStyles();
@@ -80,7 +80,7 @@ const Cart = props => {
                 title={product.name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h6" component="h2">
                   {product.name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
@@ -90,12 +90,17 @@ const Cart = props => {
             </CardActionArea>
             <CardActions>
               <Button size="small" color="primary" onClick={() => props.removeFromCart(product._id, product)}>
-                REMOVE
+                REMOVE ITEM
               </Button>
             </CardActions>
           </Card>
           )
         })}
+        <Link to="/cart">
+          <Button size="large" color="primary">
+            CHECKOUT
+          </Button>
+        </Link>
       </Popover>
     </section>
   )
@@ -108,7 +113,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, getState) => ({
   getCart: () => dispatch(actions.getCartData()),
-  removeFromCart: (id, product) => dispatch(actions.putRemoveFromCart(id, product))
+  removeFromCart: (id, product) => dispatch(actions.deleteCartItem(id, product))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

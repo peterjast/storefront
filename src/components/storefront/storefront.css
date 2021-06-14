@@ -1,5 +1,6 @@
 .breadcrumbs {
-  margin-top: 6rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 a:hover {
@@ -12,16 +13,20 @@ a:hover {
   margin-top: 3rem;
   margin-bottom: 3rem;
   display: flex;
-  min-height: 64vh;
   flex-direction: column;
 }
 
 h1 {
-  width: 20rem;
   margin: 0 auto;
   text-align: center;
   font-family: 'Roboto';
+  font-weight: 400;
 } 
+
+.category-title {
+  margin: auto;
+  text-align: center;
+}
 
 .cart {
   position: absolute;
@@ -30,12 +35,11 @@ h1 {
 }
 
 .cart-button {
-  border: none;
-  border-style:none;
-  box-shadow: none;
-
+  border: 0;
+  box-shadow: 0;
 }
 
 #card {
   margin: 0 auto;
+  margin-bottom: 2rem;
 }
